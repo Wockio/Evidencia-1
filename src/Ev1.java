@@ -1,7 +1,9 @@
+import java.util.HashSet;
 import java.util.Scanner;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
-abstract class id {
+abstract class ID {
     String ID;
 
     public String getID() {
@@ -11,18 +13,21 @@ abstract class id {
         this.ID = ID;
     }
 
+    static HashSet<Integer> listaID = new HashSet<>();
+
     public String generarID() {
-        int numero = 0;
+        int nuevoID = 0;
+        while (nuevoID < 100000) {
+            nuevoID = (int)(Math.random()*1000000);
+        }
 
-        do {
-            numero = (int)(Math.random()*1000000);
-        } while (numero < 100000);
-
-        return String.valueOf(numero);
+        listaID.add(nuevoID);
+        String nuevoIDString = String.valueOf(nuevoID);
+        return nuevoIDString;
     }
 }
 
-class cita extends id {
+class cita extends ID {
     String doctorNombre;
     String pacienteNombre;
     private String citaFecha;
