@@ -29,3 +29,6 @@ replay_pid*
 # IDE files #
 .idea/
 *.iml
+
+# Database files #
+.db/
