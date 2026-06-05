@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 abstract class identificador {
     public int ID;
 
@@ -84,9 +86,41 @@ class cita extends identificador {
     }
 }
 
+class opcion {
+    String opcion;
+
+    public String getOpcion() {
+        return opcion;
+    }
+    public void setOpcion(String opcion) {
+        this.opcion = opcion;
+    }
+}
+
 public class Ev1 {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        opcion opcion = new opcion();
 
+        do {
+            System.out.println("Indique si desea registrar a un doctor, un paciente o una cita.");
+            opcion.setOpcion(scanner.nextLine());
+            switch (opcion.getOpcion()) {
+                case "doctor", "Doctor":
+                    break;
+
+                case "paciente", "Paciente":
+                    break;
+
+                case "cita", "Cita":
+                    break;
+
+                default:
+                    System.out.println("Vuelva a intentarlo.");
+                    opcion.setOpcion(scanner.nextLine());
+                    break;
+            }
+        } while (!opcion.getOpcion().equals("doctor") && !opcion.getOpcion().equals("paciente") && !opcion.getOpcion().equals("cita") && !opcion.getOpcion().equals("Doctor") && !opcion.getOpcion().equals("Paciente") && !opcion.getOpcion().equals("Cita"));
     }
 }
