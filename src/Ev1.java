@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.io.*;
 
-abstract class identificador {
-    public String ID;
+abstract class id {
+    String ID;
 
     public String getID() {
         return ID;
@@ -22,68 +22,24 @@ abstract class identificador {
     }
 }
 
-class doctor extends identificador {
-    private String doctorNombre;
-    private String doctorTipo;
-
-    public doctor(String ID, String doctorNombre, String doctorTipo) {
-        this.ID = ID;
-        this.doctorNombre = doctorNombre;
-        this.doctorTipo = doctorTipo;
-    }
-    public doctor() {
-        this.ID = ID;
-        this.doctorNombre = doctorNombre;
-        this.doctorTipo = doctorTipo;
-    }
-
-    public String getDoctorNombre() {
-        return doctorNombre;
-    }
-    public void setDoctorNombre(String doctorNombre) {
-        this.doctorNombre = doctorNombre;
-    }
-
-    public String getDoctorTipo() {
-        return doctorTipo;
-    }
-    public void setDoctorTipo(String doctorTipo) {
-        this.doctorTipo = doctorTipo;
-    }
-}
-
-class paciente extends identificador {
-    private String pacienteNombre;
-
-    public paciente(String ID, String pacienteNombre) {
-        this.ID = ID;
-        this.pacienteNombre = pacienteNombre;
-    }
-    public paciente() {
-        this.ID = ID;
-        this.pacienteNombre = pacienteNombre;
-    }
-
-    public String getPacienteNombre() {
-        return pacienteNombre;
-    }
-    public void setPacienteNombre(String pacienteNombre) {
-        this.pacienteNombre = pacienteNombre;
-    }
-}
-
-class cita extends identificador {
+class cita extends id {
+    String doctorNombre;
+    String pacienteNombre;
     private String citaFecha;
     private String citaHora;
     private String citaMotivo;
 
     public cita(String ID, String citaFecha, String citaHora, String citaMotivo) {
+        this.doctorNombre = doctorNombre;
+        this.pacienteNombre = pacienteNombre;
         this.ID = ID;
         this.citaFecha = citaFecha;
         this.citaHora = citaHora;
         this.citaMotivo = citaMotivo;
     }
     public cita() {
+        this.doctorNombre = doctorNombre;
+        this.pacienteNombre = pacienteNombre;
         this.ID = ID;
         this.citaFecha = citaFecha;
         this.citaHora = citaHora;
@@ -109,6 +65,51 @@ class cita extends identificador {
     }
     public void setCitaMotivo(String citaMotivo) {
         this.citaMotivo = citaMotivo;
+    }
+    public String getDoctorNombre() {
+        return doctorNombre;
+    }
+    public void setDoctorNombre(String doctorNombre) {
+        this.doctorNombre = doctorNombre;
+    }
+    public String getPacienteNombre() {
+        return pacienteNombre;
+    }
+    public void setPacienteNombre(String pacienteNombre) {
+        this.pacienteNombre = pacienteNombre;
+    }
+}
+
+class doctor extends cita {
+    private String doctorTipo;
+
+    public doctor(String ID, String doctorNombre, String doctorTipo) {
+        this.ID = ID;
+        this.doctorNombre = doctorNombre;
+        this.doctorTipo = doctorTipo;
+    }
+    public doctor() {
+        this.ID = ID;
+        this.doctorNombre = doctorNombre;
+        this.doctorTipo = doctorTipo;
+    }
+
+    public String getDoctorTipo() {
+        return doctorTipo;
+    }
+    public void setDoctorTipo(String doctorTipo) {
+        this.doctorTipo = doctorTipo;
+    }
+}
+
+class paciente extends cita {
+    public paciente(String ID, String pacienteNombre) {
+        this.ID = ID;
+        this.pacienteNombre = pacienteNombre;
+    }
+    public paciente() {
+        this.ID = ID;
+        this.pacienteNombre = pacienteNombre;
     }
 }
 
@@ -196,6 +197,10 @@ public class Ev1 {
                 case "cita", "Cita":
                     cita cita = new cita();
                     cita.setID(cita.generarID());
+                    System.out.println("Teclee el nombre del doctor en la cita.");
+                    cita.setDoctorNombre(scanner.nextLine());
+                    System.out.println("Teclee el nombre del paciente en la cita.");
+                    cita.setPacienteNombre(scanner.nextLine());
                     System.out.println("Teclee la fecha de la cita.");
                     cita.setCitaFecha(scanner.nextLine());
                     System.out.println("Teclee la hora de la cita.");
@@ -204,7 +209,7 @@ public class Ev1 {
                     cita.setCitaMotivo(scanner.nextLine());
 
                     try (FileWriter escritor = new FileWriter("db\\informacion.csv", true)) {
-                        escritor.write((cita.getID()) + "," + "Cita" + "," + (cita.getCitaFecha()) + "," + (cita.getCitaHora()) + "," + (cita.getCitaMotivo()) + "," + "\n");
+                        escritor.write((cita.getID()) + "," + "Cita" + "," + (cita.getDoctorNombre()) + "," + (cita.getPacienteNombre()) + "," + (cita.getCitaFecha()) + "," + (cita.getCitaHora()) + "," + (cita.getCitaMotivo()) + "," + "\n");
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     } finally {
