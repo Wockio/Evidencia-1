@@ -15,7 +15,12 @@ class doctor extends identificador {
     private String doctorNombre;
     private String doctorTipo;
 
-    public doctor (int ID, String doctorNombre, String doctorTipo) {
+    public doctor(int ID, String doctorNombre, String doctorTipo) {
+        this.ID = ID;
+        this.doctorNombre = doctorNombre;
+        this.doctorTipo = doctorTipo;
+    }
+    public doctor() {
         this.ID = ID;
         this.doctorNombre = doctorNombre;
         this.doctorTipo = doctorTipo;
@@ -39,7 +44,11 @@ class doctor extends identificador {
 class paciente extends identificador {
     private String pacienteNombre;
 
-    public paciente (int ID, String pacienteNombre) {
+    public paciente(int ID, String pacienteNombre) {
+        this.ID = ID;
+        this.pacienteNombre = pacienteNombre;
+    }
+    public paciente() {
         this.ID = ID;
         this.pacienteNombre = pacienteNombre;
     }
@@ -57,7 +66,13 @@ class cita extends identificador {
     private String citaHora;
     private String citaMotivo;
 
-    public cita (int ID, String citaFecha, String citaHora, String citaMotivo) {
+    public cita(int ID, String citaFecha, String citaHora, String citaMotivo) {
+        this.ID = ID;
+        this.citaFecha = citaFecha;
+        this.citaHora = citaHora;
+        this.citaMotivo = citaMotivo;
+    }
+    public cita() {
         this.ID = ID;
         this.citaFecha = citaFecha;
         this.citaHora = citaHora;
@@ -108,6 +123,13 @@ public class Ev1 {
             opcion.setOpcion(scanner.nextLine());
             switch (opcion.getOpcion()) {
                 case "doctor", "Doctor":
+                    doctor doctor = new doctor();
+                    int numero = (int)(Math.random()*100001);
+                    doctor.setID(numero);
+                    System.out.println("Teclee el nombre del doctor");
+                    doctor.setDoctorNombre(scanner.nextLine());
+                    System.out.println("Teclee la especialidad del doctor");
+                    doctor.setDoctorTipo(scanner.nextLine());
                     break;
 
                 case "paciente", "Paciente":
