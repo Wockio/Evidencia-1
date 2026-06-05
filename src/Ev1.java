@@ -1,13 +1,19 @@
 import java.util.Scanner;
+import java.io.*;
 
 abstract class identificador {
-    public int ID;
+    public String ID;
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String generarID() {
+        int numero = (int)(Math.random()*101010);
+        return String.valueOf(numero);
     }
 }
 
@@ -15,7 +21,7 @@ class doctor extends identificador {
     private String doctorNombre;
     private String doctorTipo;
 
-    public doctor(int ID, String doctorNombre, String doctorTipo) {
+    public doctor(String ID, String doctorNombre, String doctorTipo) {
         this.ID = ID;
         this.doctorNombre = doctorNombre;
         this.doctorTipo = doctorTipo;
@@ -44,7 +50,7 @@ class doctor extends identificador {
 class paciente extends identificador {
     private String pacienteNombre;
 
-    public paciente(int ID, String pacienteNombre) {
+    public paciente(String ID, String pacienteNombre) {
         this.ID = ID;
         this.pacienteNombre = pacienteNombre;
     }
@@ -66,7 +72,7 @@ class cita extends identificador {
     private String citaHora;
     private String citaMotivo;
 
-    public cita(int ID, String citaFecha, String citaHora, String citaMotivo) {
+    public cita(String ID, String citaFecha, String citaHora, String citaMotivo) {
         this.ID = ID;
         this.citaFecha = citaFecha;
         this.citaHora = citaHora;
@@ -117,7 +123,7 @@ public class Ev1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         opcion opcion = new opcion();
-        int numero = 0;
+        File archivo = new File("db\\info.csv");
 
         do {
             System.out.println("Indique si desea registrar a un doctor, un paciente o una cita.");
@@ -125,12 +131,19 @@ public class Ev1 {
             switch (opcion.getOpcion()) {
                 case "doctor", "Doctor":
                     doctor doctor = new doctor();
-                    numero = (int)(Math.random()*101010);
-                    doctor.setID(numero);
+                    doctor.setID(doctor.generarID());
+                    System.out.println(doctor.getID());
                     System.out.println("Teclee el nombre del doctor.");
                     doctor.setDoctorNombre(scanner.nextLine());
                     System.out.println("Teclee la especialidad del doctor.");
                     doctor.setDoctorTipo(scanner.nextLine());
+
+                    try (FileWriter escritor = new FileWriter("db\\info.csv")) {
+                        escritor.write(doctor.getID());
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                        opcion.setOpcion("");
+                    }
                     break;
 
                 case "paciente", "Paciente":
