@@ -12,7 +12,12 @@ abstract class identificador {
     }
 
     public String generarID() {
-        int numero = (int)(Math.random()*1000000);
+        int numero = 0;
+
+        do {
+            numero = (int)(Math.random()*1000000);
+        } while (numero < 100000);
+
         return String.valueOf(numero);
     }
 }
@@ -122,6 +127,30 @@ public class Ev1 {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        String passID = "";
+        int passIDnum = 0;
+        String password = "";
+
+        do {
+            System.out.print("Identificador: ");
+            passID = scanner.nextLine();
+
+            try {
+                passIDnum = Integer.valueOf(passID);
+            } catch (NumberFormatException e) {
+                System.out.println("Ingresa un numero.");
+            } finally {
+                System.out.println();
+            }
+        } while (passIDnum < 100000);
+
+        do {
+            System.out.print("Contraseña: ");
+            password = scanner.nextLine();
+            System.out.println();
+        } while (!password.equals("tecmilenio"));
+
         opcion opcion = new opcion();
 
         do {
@@ -140,8 +169,8 @@ public class Ev1 {
 
                     try (FileWriter escritor = new FileWriter("db\\informacion.csv", true)) {
                         escritor.write((doctor.getID()) + "," + "Doctor" + "," + (doctor.getDoctorNombre()) + "," + (doctor.getDoctorTipo()) + "," + "\n");
-                    } catch (IOException ex) {
-                        System.out.println(ex.getMessage());
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
                     } finally {
                         opcion.setOpcion("");
                         System.out.println();
