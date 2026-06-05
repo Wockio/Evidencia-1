@@ -12,7 +12,7 @@ abstract class identificador {
     }
 
     public String generarID() {
-        int numero = (int)(Math.random()*101010);
+        int numero = (int)(Math.random()*1000000);
         return String.valueOf(numero);
     }
 }
@@ -125,7 +125,9 @@ public class Ev1 {
         opcion opcion = new opcion();
 
         do {
+            System.out.println();
             System.out.println("Indique si desea registrar a un doctor, un paciente o una cita.");
+            System.out.println("Para cerrar el programa, teclee 'terminar'.");
             opcion.setOpcion(scanner.nextLine());
             switch (opcion.getOpcion()) {
                 case "doctor", "Doctor":
@@ -181,7 +183,11 @@ public class Ev1 {
                         System.out.println();
                     }
                     break;
+
+                case "terminar", "Terminar":
+                    System.exit(0);
+                    break;
             }
-        } while (!opcion.getOpcion().equals("doctor") && !opcion.getOpcion().equals("paciente") && !opcion.getOpcion().equals("cita") && !opcion.getOpcion().equals("Doctor") && !opcion.getOpcion().equals("Paciente") && !opcion.getOpcion().equals("Cita"));
+        } while (!opcion.getOpcion().equals("doctor") && !opcion.getOpcion().equals("paciente") && !opcion.getOpcion().equals("cita") && !opcion.getOpcion().equals("terminar") && !opcion.getOpcion().equals("Doctor") && !opcion.getOpcion().equals("Paciente") && !opcion.getOpcion().equals("Cita") && !opcion.getOpcion().equals("Terminar"));
     }
 }
