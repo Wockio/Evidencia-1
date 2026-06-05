@@ -123,7 +123,6 @@ public class Ev1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         opcion opcion = new opcion();
-        File archivo = new File("db\\info.csv");
 
         do {
             System.out.println("Indique si desea registrar a un doctor, un paciente o una cita.");
@@ -132,43 +131,55 @@ public class Ev1 {
                 case "doctor", "Doctor":
                     doctor doctor = new doctor();
                     doctor.setID(doctor.generarID());
-                    System.out.println(doctor.getID());
                     System.out.println("Teclee el nombre del doctor.");
                     doctor.setDoctorNombre(scanner.nextLine());
                     System.out.println("Teclee la especialidad del doctor.");
                     doctor.setDoctorTipo(scanner.nextLine());
 
-                    try (FileWriter escritor = new FileWriter("db\\info.csv")) {
-                        escritor.write(doctor.getID());
+                    try (FileWriter escritor = new FileWriter("db\\informacion.csv", true)) {
+                        escritor.write((doctor.getID()) + "," + "Doctor" + "," + (doctor.getDoctorNombre()) + "," + (doctor.getDoctorTipo()) + "," + "\n");
                     } catch (IOException ex) {
                         System.out.println(ex.getMessage());
+                    } finally {
                         opcion.setOpcion("");
+                        System.out.println();
                     }
                     break;
 
                 case "paciente", "Paciente":
                     paciente paciente = new paciente();
-                    numero = (int)(Math.random()*101010);
-                    paciente.setID(numero);
+                    paciente.setID(paciente.generarID());
                     System.out.println("Teclee el nombre del paciente.");
                     paciente.setPacienteNombre(scanner.nextLine());
+
+                    try (FileWriter escritor = new FileWriter("db\\informacion.csv", true)) {
+                        escritor.write((paciente.getID()) + "," + "Paciente" + "," + (paciente.getPacienteNombre()) + "," + "\n");
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    } finally {
+                        opcion.setOpcion("");
+                        System.out.println();
+                    }
                     break;
 
                 case "cita", "Cita":
                     cita cita = new cita();
-                    numero = (int)(Math.random()*101010);
-                    cita.setID(numero);
+                    cita.setID(cita.generarID());
                     System.out.println("Teclee la fecha de la cita.");
                     cita.setCitaFecha(scanner.nextLine());
                     System.out.println("Teclee la hora de la cita.");
                     cita.setCitaHora(scanner.nextLine());
                     System.out.println("Teclee el motivo de la cita.");
                     cita.setCitaMotivo(scanner.nextLine());
-                    break;
 
-                default:
-                    System.out.println("Vuelva a intentarlo.");
-                    opcion.setOpcion(scanner.nextLine());
+                    try (FileWriter escritor = new FileWriter("db\\informacion.csv", true)) {
+                        escritor.write((cita.getID()) + "," + "Cita" + "," + (cita.getCitaFecha()) + "," + (cita.getCitaHora()) + "," + (cita.getCitaMotivo()) + "," + "\n");
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    } finally {
+                        opcion.setOpcion("");
+                        System.out.println();
+                    }
                     break;
             }
         } while (!opcion.getOpcion().equals("doctor") && !opcion.getOpcion().equals("paciente") && !opcion.getOpcion().equals("cita") && !opcion.getOpcion().equals("Doctor") && !opcion.getOpcion().equals("Paciente") && !opcion.getOpcion().equals("Cita"));
